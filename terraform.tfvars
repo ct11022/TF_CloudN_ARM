@@ -1,7 +1,7 @@
 testbed_name = "caag-arm-ex-67-reg"
 
 #Use exsiting screct key for all testbed items SSH login.
-public_key_path = "~/.ssh/apitest.pub"
+public_key_path = ""
 
 # For create the VNET CIDR and subnet CIDR in Azure for controller
 # controller_vnet_cidr   = "10.109.0.0/24"
@@ -17,7 +17,7 @@ upgrade_target_version = "6.7-patch"
 # transit_subnet_cidr = "10.88.7.64/26"
 # transit_ha_subnet_cidr = "10.88.7.192/26"
 
-incoming_ssl_cidr = ["218.161.71.144/32", "54.193.25.159/32", "54.241.35.249/32", "67.207.111.163/32"]
+incoming_ssl_cidr = ["", ""]
 
 
 # caag_name = ""
