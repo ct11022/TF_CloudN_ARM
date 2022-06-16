@@ -29,6 +29,7 @@ $ export TF_VAR_ARM_TENANT_ID=$ARM_TENANT_ID
 ```
 
 Or you can define credentials in the "provider.tf"
+This method requires the use of the key in the provider_cred.tfvars at next stes.
 ``` terraform
 variable "client_secret" {
 }
@@ -48,10 +49,10 @@ terraform {
 provider "azurerm" {
   features {}
 
-  subscription_id = "00000000-0000-0000-0000-000000000000"
-  client_id       = "00000000-0000-0000-0000-000000000000"
-  client_secret   = var.client_secret
-  tenant_id       = "00000000-0000-0000-0000-000000000000"
+  subscription_id = var.ARM_SUBSCRIPTION_ID
+  client_id       = var.ARM_CLIENT_ID
+  client_secret   = var.ARM_CLIENT_SECRET
+  tenant_id       = var.ARM_TENANT_ID
 }
 ```
 
@@ -60,7 +61,11 @@ Provide testbed info such as controller password, license etc as necessary in pr
 ``` terraform
 aviatrix_controller_password = "Enter_your_controller_password"  
 aviatrix_admin_email  = "Enter_your_controller_admin_email"  
-aviatrix_license_id  = "Enter_license_ID_string_for_controller"  
+aviatrix_license_id  = "Enter_license_ID_string_for_controller"
+ARM_SUBSCRIPTION_ID = ""
+ARM_CLIENT_ID = ""
+ARM_CLIENT_SECRET = ""
+ARM_TENANT_ID = ""
 github_token  = "Github oAthu token allow TF access Aviatrix private Repo"  
 ```
 ### 3. The Arguments for Customized
