@@ -167,3 +167,7 @@ variable "pri_subnet2_cidr" {
   type        = list(string)
   default     = ["10.8.3.0/24", "10.9.3.0/24"]
 }
+variable "cert_domain" {
+  type       = string
+  default = "caag.com"
+}
