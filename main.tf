@@ -37,7 +37,7 @@ resource "aviatrix_controller_cert_domain_config" "controller_cert_domain" {
     provider    = aviatrix.new_controller
     cert_domain = var.cert_domain
     depends_on = [
-      aviatrix_transit_gateway.transit
+      module.aviatrix_controller_initialize
     ]
 }
 
@@ -69,8 +69,7 @@ resource "aviatrix_vpc" "transit_vnet" {
   cidr                 = "172.16.0.0/16"
   aviatrix_firenet_vpc = false
   depends_on = [
-    aviatrix_controller_cert_domain_config.controller_cert_domain,
-    module.aviatrix_controller_initialize
+    aviatrix_controller_cert_domain_config.controller_cert_domain
   ]
 }
 
