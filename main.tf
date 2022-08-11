@@ -89,7 +89,9 @@ resource "aviatrix_transit_gateway" "transit" {
   single_ip_snat    = false
   connected_transit = true
   depends_on = [
-  module.aviatrix_controller_initialize]
+    module.aviatrix_controller_initialize,
+    aviatrix_controller_cert_domain_config.controller_cert_domain
+  ]
 }
 
 # Create an Aviatrix Spoke Gateway
@@ -108,6 +110,7 @@ resource "aviatrix_spoke_gateway" "spoke" {
   manage_transit_gateway_attachment = false
   depends_on                 = [
     module.arm-spoke-vnet,
+    aviatrix_controller_cert_domain_config.controller_cert_domain,
     module.aviatrix_controller_initialize
   ]
 }

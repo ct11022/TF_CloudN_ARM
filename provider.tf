@@ -22,7 +22,3 @@ provider "aviatrix" {
   skip_version_validation = true
   alias                   = "new_controller"
 }
-# provider "github" {
-#   token                  = var.github_token
-#   alias                  = "login"
-# }
