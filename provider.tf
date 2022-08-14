@@ -9,6 +9,7 @@ terraform {
     }
     aviatrix = {
       source = "AviatrixSystems/aviatrix"
+      version = "2.22.1"
     }
   }
 }
