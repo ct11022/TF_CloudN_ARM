@@ -111,7 +111,7 @@ resource "azurerm_linux_virtual_machine" "aviatrix_controller_vm" {
   }
 
   source_image_reference {
-    offer     = "aviatrix-bundle-payg"
+    offer     = "aviatrix-bundle-payg-preview"
     publisher = "aviatrix-systems"
     sku       = "aviatrix-enterprise-bundle-byol"
     version   = "latest"
@@ -119,7 +119,7 @@ resource "azurerm_linux_virtual_machine" "aviatrix_controller_vm" {
 
   plan {
     name      = "aviatrix-enterprise-bundle-byol"
-    product   = "aviatrix-bundle-payg"
+    product   = "aviatrix-bundle-payg-preview"
     publisher = "aviatrix-systems"
   }
 }
