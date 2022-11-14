@@ -1,3 +1,6 @@
+locals {
+  iptable_ssl_cidr_jsonencode = jsonencode([for i in var.incoming_ssl_cidr :  {"addr"= i, "desc"= "" }])
+}
 
 #create a Controller with new build VNET in Azure
 module "aviatrix_controller_build" {
@@ -33,11 +36,23 @@ module "aviatrix_controller_initialize" {
   ]
 }
 
+resource "null_resource" "call_api_set_allow_list" {
+  provisioner "local-exec" {
+    command = <<-EOT
+            AVTX_CID=$(curl -X POST  -k https://${module.aviatrix_controller_build.aviatrix_controller_public_ip_address}/v1/backend1 -d 'action=login_proc&username=admin&password=Aviatrix123#'| awk -F"\"" '{print $34}');
+            curl -k -v -X PUT https://${module.aviatrix_controller_build.aviatrix_controller_public_ip_address}/v2.5/api/controller/allow-list --header "Content-Type: application/json" --header "Authorization: cid $AVTX_CID" -d '{"allow_list": ${local.iptable_ssl_cidr_jsonencode}, "enable": true, "enforce": true}'
+        EOT
+  }
+  depends_on = [
+    module.aviatrix_controller_initialize
+  ]
+}
+
 resource "aviatrix_controller_cert_domain_config" "controller_cert_domain" {
     provider    = aviatrix.new_controller
     cert_domain = var.cert_domain
     depends_on = [
-      module.aviatrix_controller_initialize
+      null_resource.call_api_set_allow_list
     ]
 }
 
