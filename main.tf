@@ -120,14 +120,21 @@ resource "aviatrix_spoke_gateway" "spoke" {
   vpc_reg                    = var.location
   gw_size                    = var.spoke_size
   subnet                     = module.arm-spoke-vnet.subnet_cidr[count.index]
-  ha_subnet                  = module.arm-spoke-vnet.subnet_cidr[count.index]
-  ha_gw_size                 = var.spoke_size
-  manage_transit_gateway_attachment = false
+  manage_ha_gateway          = false
   depends_on                 = [
     module.arm-spoke-vnet,
     aviatrix_controller_cert_domain_config.controller_cert_domain,
     module.aviatrix_controller_initialize
   ]
+}
+
+# Create an Aviatrix AWS Spoke HA Gateway
+resource "aviatrix_spoke_ha_gateway" "spoke_ha" {
+  provider        = aviatrix.new_controller
+  count           = var.spoke_count
+  primary_gw_name = aviatrix_spoke_gateway.spoke[count.index].id
+  subnet          = module.arm-spoke-vnet.subnet_cidr[count.index]
+  gw_name         = "${var.testbed_name}-Spoke-GW-${count.index}-ha"
 }
 
 # Create Spoke-Transit Attachment
@@ -136,4 +143,7 @@ resource "aviatrix_spoke_transit_attachment" "spoke" {
   count           = var.spoke_count
   spoke_gw_name   = aviatrix_spoke_gateway.spoke[count.index].gw_name
   transit_gw_name = aviatrix_transit_gateway.transit.gw_name
+  depends_on = [
+    aviatrix_spoke_ha_gateway.spoke_ha
+  ]
 }
