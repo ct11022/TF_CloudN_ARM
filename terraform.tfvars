@@ -1,4 +1,4 @@
-testbed_name = "caag-arm-ex-67-reg"
+testbed_name = "tf-arm-ex-71"
 
 #Use exsiting screct key for all testbed items SSH login.
 public_key_path = ""
@@ -8,7 +8,7 @@ public_key_path = ""
 # controller_subnet_cidr = "10.109.0.0/24"
 
 #controller will be upgraded to the particular version of you assign
-upgrade_target_version = "6.7-patch"
+upgrade_target_version = "7.1"
 
 #if user want to create transit gw at existng VPC, you need to fill & enable following parameters
 # transit_vnet_id = "ryan-cw-arm-avx-transit-vnet-01:ryan-cw-rg:e8ce487d-1ec9-4cf1-8957-221cd4fc5c85"
@@ -17,7 +17,7 @@ upgrade_target_version = "6.7-patch"
 # transit_subnet_cidr = "10.88.7.64/26"
 # transit_ha_subnet_cidr = "10.88.7.192/26"
 
-incoming_ssl_cidr = ["", ""]
+incoming_ssl_cidrs = ["", ""]
 
 
 # caag_name = ""

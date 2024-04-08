@@ -3,11 +3,17 @@ variable "location" {
   description = "Resource Group Location for Aviatrix Controller"
   default     = "West US"
 }
-
 variable "testbed_name" {
   type        = string
   description = "Customized Name for Test Bed"
 }
+variable "aws_controller_region" { default = "us-west-2" }
+
+variable "aws_shared_config_files" { default = ["$HOME/.aws/credentials"] }
+
+variable "aws_shared_credentials_files" { default = ["$HOME/.aws/credentials"] }
+
+variable "aws_shared_config_profile_name" { default = "cloudn" }
 
 variable "upgrade_target_version" {
   type        = string
@@ -15,29 +21,26 @@ variable "upgrade_target_version" {
   default     = "latest"
 }
 
-variable "controller_vnet_cidr" {
-  type        = string
-  description = "CIDR for controller VNET."
-  default     = "10.168.0.0/24"
-}
-
-variable "controller_subnet_cidr" {
-  type        = string
-  description = "CIDR for controller subnet."
-  default     = "10.168.0.0/24"
-}
-
-variable "controller_virtual_machine_size" {
-  type        = string
-  description = "Virtual Machine size for the controller."
-  default     = "Standard_D2_v2"
-}
-
-variable "incoming_ssl_cidr" {
+variable "incoming_ssl_cidrs" {
   type        = list(string)
   description = "Incoming cidr for security group used by controller."
 }
-
+variable "controller_vpc_id" {
+  description = "create controller at existed vpc"
+  default     = ""
+}
+variable "controller_vpc_cidr" {
+  description = "create controller at existed vpc"
+  default     = ""
+}
+variable "controller_subnet_id" {
+  description = "create controller at existed vpc"
+  default     = ""
+}
+variable "keypair_name" {
+  description = "use the key saved on aws"
+  default     = ""
+}
 variable "public_key_path" {
   type        = string
   description = "The path of public key"
@@ -56,13 +59,31 @@ variable "avx_controller_admin_password" {
   default     = "Aviatrix123#"
 }
 
+variable "aviatrix_controller_ami_id" {
+  default = ""
+}
+
+variable "release_infra" {
+  default = "staging"
+}
+
 variable "avx_controller_admin_email" {
   type    = string
   default = "ctseng@aviatrix.com"
 }
 
-variable "access_account_name" {
-  description = "This name labels the account in the Aviatrix Controller."
+variable "cert_domain" {
+  type    = string
+  default = "aviatrixsystem.com"
+}
+
+variable "aviatrix_aws_access_account" {
+  description = "This name labels the aws account in the Aviatrix Controller."
+  type        = string
+  default     = "aws1"
+}
+variable "aviatrix_arm_access_account" {
+  description = "This name labels the arm account in the Aviatrix Controller."
   type        = string
   default     = "arm1"
 }
@@ -167,7 +188,7 @@ variable "pri_subnet2_cidr" {
   type        = list(string)
   default     = ["10.8.3.0/24", "10.9.3.0/24"]
 }
-variable "cert_domain" {
-  type       = string
-  default = "caag.com"
+variable "spoke_ha_postfix_name" {
+  description = "A string to append to the spoke_ha name."
+  default     = "hagw"
 }
